@@ -43,6 +43,7 @@
             <button id="submit">منو بمال</button>
         </div>
         <div class="points">امتیاز: <span id="points">0</span></div>
+        <div id="error"></div>
     </main>
     <div id="bademjoon" class="bademjoon">
         <img src="bademjoon.png">
@@ -80,7 +81,7 @@
             const main = document.querySelector("#main");
             const bademjoon = document.querySelector("#bademjoon");
             const myPoint = document.querySelector("#myPoint");
-        
+            
             if (main) {
                 main.style.display = "none";
                 bademjoon.style.display = "flex";
@@ -135,14 +136,17 @@
             const inputValue = OTPValueContainer.value.trim();
 
             const wordIndex = gameWords.indexOf(inputValue);
-
+            const error = document.querySelector("#error");
+           
             if (wordIndex !== -1) {
                 updatePoints(inputValue.length);
                 gameWords.splice(wordIndex, 1);
                 inputs.forEach((input) => input.value = "");
+                 error.innerHTML = "Bilakh";
 
             } else {
                 inputs.forEach((input) => input.value = "");
+                 error.innerHTML = " ";
             }
 
             checkGameStatus();
