@@ -9,35 +9,37 @@
 <body>
     <main id="main">
         <div class="title">
+            <span id="timer">02:00</span> <!-- Timer -->
             <span id="remains"></span>
             <h2>بادمجون</h2>
         </div>
         <div class="words">
-            <span>پ</span>
-            <span class="words-line"></span>
-            <span>ل</span>
-            <span class="words-line"></span>
-            <span>و</span>
+            <span>ک</span>
             <span class="words-line"></span>
             <span>ا</span>
             <span class="words-line"></span>
-            <span>د</span>
+            <span>ت</span>
             <span class="words-line"></span>
-            <span>ر</span>
+            <span>ش</span>
+            <span class="words-line"></span>
+            <span>ا</span>
+            <span class="words-line"></span>
+            <span>ف</span>
         </div>
         <div id="otp-input" class="font-h2-strong" dir="rtl">
-            <input class="font-h2-strong" step="1"  autocomplete="no" pattern="\d*" />
-            <input class="font-h2-strong" step="1"  autocomplete="no" pattern="\d*" />
-            <input class="font-h2-strong" step="1"  autocomplete="no" pattern="\d*" />
-            <input class="font-h2-strong" step="1"  autocomplete="no" pattern="\d*" />
-            <input class="font-h2-strong" step="1"  autocomplete="no" pattern="\d*" />
-            <input class="font-h2-strong" step="1"  autocomplete="no" pattern="\d*" />
+            <input class="font-h2-strong" step="1" autocomplete="no" pattern="\d*" />
+            <input class="font-h2-strong" step="1" autocomplete="no" pattern="\d*" />
+            <input class="font-h2-strong" step="1" autocomplete="no" pattern="\d*" />
+            <input class="font-h2-strong" step="1" autocomplete="no" pattern="\d*" />
+            <input class="font-h2-strong" step="1" autocomplete="no" pattern="\d*" />
+            <input class="font-h2-strong" step="1" autocomplete="no" pattern="\d*" />
             <input id="otp-value" type="hidden" name="otp" />
         </div>
 
         <div class="buttonField">
             <button id="submit">منو بمال</button>
         </div>
+        <div class="points">امتیاز: <span id="points">0</span></div>
     </main>
     <div id="bademjoon" class="bademjoon">
         <img src="bademjoon.png">
@@ -48,29 +50,62 @@
         const OTPContainer = document.querySelector("#otp-input");
         const OTPValueContainer = document.querySelector("#otp-value");
         const continueButton = document.querySelector("#submit");
-        const gameWords = ["پلو", "راد", "لوپ"];
-        
-        function updateRemainingWords() {
-            const remainingWords = gameWords.length;
-            const remainsElement = document.getElementById("remains");
-            if (remainsElement) {
-                remainsElement.textContent = remainingWords;
+        const gameWords = ["کتف", "فاش", "کاش", "اکتشاف", "شفا", "کفش", "کشف", "افشا", "کاشف", "کاشت", "کفاش", "شکاف"];
+        const pointsElement = document.querySelector("#points");
+        const timerElement = document.querySelector("#timer");
+
+        let points = 0;
+        let timeRemaining = 120;
+
+        // Timer
+        function startTimer() {
+            const timerInterval = setInterval(() => {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    const minutes = Math.floor(timeRemaining / 60);
+                    const seconds = timeRemaining % 60;
+                    timerElement.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+                } else {
+                    clearInterval(timerInterval);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            alert(`Game over! Your total points: ${points}`);
+            const main = document.querySelector("#main");
+            const bademjoon = document.querySelector("#bademjoon");
+            if (main) {
+                main.style.display = "none";
+                bademjoon.style.display = "flex";
             }
-            return remainingWords;
+        }
+
+        // Update points
+        function updatePoints(wordLength) {
+            switch (wordLength) {
+                case 3:
+                    points += 1;
+                    break;
+                case 4:
+                    points += 3;
+                    break;
+                case 5:
+                    points += 6;
+                    break;
+                case 6:
+                    points += 10;
+                    break;
+            }
+            pointsElement.textContent = points;
         }
 
         function checkGameStatus() {
-            if (updateRemainingWords() === 0) {
-                const main = document.querySelector("#main");
-                const bademjoon = document.querySelector("#bademjoon");
-                if (main) {
-                    main.style.display = "none";
-                    bademjoon.style.display = "flex";
-                }
+            if (gameWords.length === 0) {
+                endGame();
             }
         }
-
-        updateRemainingWords();
 
         continueButton.addEventListener("click", (e) => {
             updateValue(inputs);
@@ -79,14 +114,17 @@
             const wordIndex = gameWords.indexOf(inputValue);
 
             if (wordIndex !== -1) {
-                gameWords.splice(wordIndex, 1); 
-                alert('ok');
+                updatePoints(inputValue.length);
+                gameWords.splice(wordIndex, 1);
+                inputs.forEach((input) => input.value = "");
+
             } else {
-                alert('wrong');
+                inputs.forEach((input) => input.value = "");
             }
 
             checkGameStatus();
         });
+
         const firstInput = OTPContainer.querySelector("input");
         firstInput.focus();
 
@@ -167,8 +205,6 @@
             }
         };
 
-        const handleDelete = (inputElement, curIndex, inputs) => {};
-
         const handleKeyUp = (event, key, inputElement, curIndex, inputs) => {
             if (key === "Backspace") focusPrev(inputs, curIndex);
         };
@@ -183,6 +219,7 @@
 
             input.addEventListener("focus", (e) => e.target.select());
         });
+        startTimer();
     });
 </script>
 </html>
