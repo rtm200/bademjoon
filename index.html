@@ -33,6 +33,7 @@
             <input class="font-h2-strong" step="1" autocomplete="no" pattern="\d*" />
             <input class="font-h2-strong" step="1" autocomplete="no" pattern="\d*" />
             <input class="font-h2-strong" step="1" autocomplete="no" pattern="\d*" />
+            <input class="font-h2-strong" step="1" autocomplete="no" pattern="\d*" />
             <input id="otp-value" type="hidden" name="otp" />
         </div>
 
@@ -50,7 +51,7 @@
         const OTPContainer = document.querySelector("#otp-input");
         const OTPValueContainer = document.querySelector("#otp-value");
         const continueButton = document.querySelector("#submit");
-        const gameWords = ["کتف", "فاش", "کاش", "اکتشاف", "شفا", "کفش", "کشف", "افشا", "کاشف", "کاشت", "کفاش", "شکاف"];
+        const gameWords = ["متن", "مترو", "تنور", "مایو", "تورم", "رمان", "تیمار", "تامین", "روانی", "مانتو", "تمرین", "ویران", "نیمرو", "تومان", "امنیت", "میترا", "مریوان", "رومانی", "ویتنام", "ورامین"];
         const pointsElement = document.querySelector("#points");
         const timerElement = document.querySelector("#timer");
 
@@ -96,6 +97,9 @@
                     break;
                 case 6:
                     points += 10;
+                    break;
+                case 6:
+                    points += 20;
                     break;
             }
             pointsElement.textContent = points;
