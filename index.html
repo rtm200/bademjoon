@@ -46,6 +46,7 @@
     </main>
     <div id="bademjoon" class="bademjoon">
         <img src="bademjoon.png">
+        <h2 id="myPoint"></h2>
     </div>
 </body>
 <script>
@@ -76,12 +77,13 @@
         }
 
         function endGame() {
-            alert(`Game over! Your total points: ${points}`);
             const main = document.querySelector("#main");
             const bademjoon = document.querySelector("#bademjoon");
+            const myPoint = document.querySelector("#myPoint");
             if (main) {
                 main.style.display = "none";
                 bademjoon.style.display = "flex";
+                myPoint.innerHTML = points;
             }
         }
 
