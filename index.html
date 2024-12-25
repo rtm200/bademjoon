@@ -80,10 +80,25 @@
             const main = document.querySelector("#main");
             const bademjoon = document.querySelector("#bademjoon");
             const myPoint = document.querySelector("#myPoint");
+        
             if (main) {
                 main.style.display = "none";
                 bademjoon.style.display = "flex";
                 myPoint.innerHTML = points;
+        
+                const fileContent = `Your total points: ${points}`;
+                
+                const blob = new Blob([fileContent], { type: "text/plain" });
+        
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = "points.txt";
+
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                URL.revokeObjectURL(link.href);
             }
         }
 
