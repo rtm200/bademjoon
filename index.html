@@ -142,11 +142,12 @@
                 updatePoints(inputValue.length);
                 gameWords.splice(wordIndex, 1);
                 inputs.forEach((input) => input.value = "");
-                 error.innerHTML = "Bilakh";
+                 
 
             } else {
                 inputs.forEach((input) => input.value = "");
                  error.innerHTML = " ";
+                error.innerHTML = "Bilakh";
             }
 
             checkGameStatus();
